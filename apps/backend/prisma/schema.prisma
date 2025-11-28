@@ -1,5 +1,9 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
+  // "native" is for your local machine
+  // "linux-musl-openssl-3.0.x" is for the Alpine Docker container
+  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+  previewFeatures = ["omitApi"]
 }
 
 datasource db {
@@ -18,13 +22,13 @@ model User {
 }
 
 model Room {
-  id        Int        @id @default(autoincrement())
-  slug      String     @unique
-  createdAt DateTime   @default(now())
+  id        Int       @id @default(autoincrement())
+  slug      String    @unique
+  createdAt DateTime  @default(now())
   adminId   String
-  admin     User       @relation(fields: [adminId], references: [id])
+  admin     User      @relation(fields: [adminId], references: [id])
   chats     Chat[]
-  isDeleted Boolean    @default(false)
+  isDeleted Boolean   @default(false)
   RoomState RoomState?
 }
 

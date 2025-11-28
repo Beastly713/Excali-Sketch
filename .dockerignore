@@ -1,6 +1,7 @@
-node_modules/
-dist/
-.turbo/
+
+**/node_modules
+**/dist
+**/.turbo
 .env
 .env.example
 .git
