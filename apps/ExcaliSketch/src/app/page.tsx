@@ -864,7 +864,7 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <Link
-                href="https://www.linkedin.com/in/mohd-shahzan1/"
+                href="https://www.linkedin.com/in/priyanshu-sharma-713sh/"
                 target="_blank"
               >
                 <motion.div
@@ -887,7 +887,7 @@ export default function Home() {
                 </motion.div>
               </Link>
               <Link
-                href="https://github.com/shahzan01/Excali-Sketch"
+                href="https://github.com/Beastly713/Excali-Sketch"
                 target="_blank"
               >
                 <motion.div
