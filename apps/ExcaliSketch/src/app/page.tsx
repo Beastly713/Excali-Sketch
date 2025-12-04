@@ -16,6 +16,7 @@ import {
   Sparkles,
   Menu,
   X,
+  Zap, // Added Zap icon for the instant whiteboard button
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import HeroBackground from "@/components/hero-background";
@@ -91,15 +92,6 @@ export default function Home() {
     { name: "Features", href: "features" },
     { name: "About", href: "about" },
   ];
-
-  const navVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: (index: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3, delay: 0.1 * index + 0.3 },
-    }),
-  };
 
   return (
     <div className="min-h-screen bg-background overflow-hidden">
@@ -314,10 +306,27 @@ export default function Home() {
                     </ScrollLink>
                   </motion.div>
                 ))}
+                
+                {/* Mobile Whiteboard Link */}
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: navItems.length * 0.1 }}
+                >
+                  <Link href="/whiteboard" onClick={() => setIsMenuOpen(false)}>
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start text-black dark:text-white hover:text-teal-400 font-semibold"
+                    >
+                      <Zap className="mr-2 h-4 w-4" /> Instant Board
+                    </Button>
+                  </Link>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: (navItems.length + 1) * 0.1 }}
                 >
                   <Link
                     href="/auth/sign-in"
@@ -334,7 +343,7 @@ export default function Home() {
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: (navItems.length + 1) * 0.1 }}
+                  transition={{ delay: (navItems.length + 2) * 0.1 }}
                 >
                   <Link
                     href="/auth/sign-up"
@@ -427,7 +436,8 @@ export default function Home() {
               >
                 Reimagined
               </motion.span>
-              {/* Decorative elements */}
+              
+              {/* Decorative SVG elements hidden on mobile */}
               <motion.div
                 className="absolute -top-10 -right-10 w-20 h-20 text-blue-500 opacity-20 hidden md:block"
                 animate={{
@@ -480,12 +490,14 @@ export default function Home() {
               with our intuitive drawing tool.
             </motion.p>
 
+            {/* BUTTONS SECTION */}
             <motion.div
               className="mt-10 flex flex-col sm:flex-row justify-center gap-4"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.9 }}
             >
+              {/* 1. DASHBOARD BUTTON */}
               <Link href="/dashboard">
                 <motion.div
                   whileHover={{ scale: 1.05 }}
@@ -494,7 +506,7 @@ export default function Home() {
                 >
                   <Button
                     size="lg"
-                    className="relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-lg"
+                    className="relative overflow-hidden bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-lg w-full sm:w-auto"
                   >
                     <motion.span
                       className="absolute inset-0 bg-white/20 rounded-md"
@@ -502,7 +514,7 @@ export default function Home() {
                       whileHover={{ x: "100%" }}
                       transition={{ duration: 0.5 }}
                     />
-                    <span className="relative z-10 flex items-center">
+                    <span className="relative z-10 flex items-center justify-center">
                       Start Drawing
                       <motion.span
                         className="ml-2"
@@ -519,6 +531,43 @@ export default function Home() {
                   </Button>
                 </motion.div>
               </Link>
+
+              {/* 2. INSTANT WHITEBOARD BUTTON (NEW) */}
+              <Link href="/whiteboard">
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="relative"
+                >
+                  <Button
+                    size="lg"
+                    className="relative overflow-hidden bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 text-white border-0 rounded-lg w-full sm:w-auto"
+                  >
+                    <motion.span
+                      className="absolute inset-0 bg-white/20 rounded-md"
+                      initial={{ x: "-100%" }}
+                      whileHover={{ x: "100%" }}
+                      transition={{ duration: 0.5 }}
+                    />
+                    <span className="relative z-10 flex items-center justify-center">
+                      Instant Board
+                      <motion.span
+                        className="ml-2"
+                        animate={{ rotate: [0, 15, -15, 0] }}
+                        transition={{
+                          duration: 1.5,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <Zap className="h-5 w-5" />
+                      </motion.span>
+                    </span>
+                  </Button>
+                </motion.div>
+              </Link>
+
+              {/* 3. DEMO BUTTON */}
               <ScrollLink to="video" smooth={true} duration={400}>
                 <motion.div
                   whileHover={{ scale: 1.05 }}
@@ -527,7 +576,7 @@ export default function Home() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-2 border-gray-300 hover:border-gray-600 dark:border-gray-600 dark:hover:border-gray-400 mt-4 sm:mt-0 relative overflow-hidden"
+                    className="border-2 border-gray-300 hover:border-gray-600 dark:border-gray-600 dark:hover:border-gray-400 relative overflow-hidden w-full sm:w-auto"
                     onClick={(e) => {
                       e.preventDefault();
                       videoRef.current?.scrollIntoView({ behavior: "smooth" });
