@@ -16,7 +16,7 @@ import {
   Sparkles,
   Menu,
   X,
-  Zap, // Added Zap icon for the instant whiteboard button
+  Zap,
 } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import HeroBackground from "@/components/hero-background";
@@ -306,22 +306,6 @@ export default function Home() {
                     </ScrollLink>
                   </motion.div>
                 ))}
-                
-                {/* Mobile Whiteboard Link */}
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: navItems.length * 0.1 }}
-                >
-                  <Link href="/whiteboard" onClick={() => setIsMenuOpen(false)}>
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start text-black dark:text-white hover:text-teal-400 font-semibold"
-                    >
-                      <Zap className="mr-2 h-4 w-4" /> Instant Board
-                    </Button>
-                  </Link>
-                </motion.div>
 
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -532,8 +516,15 @@ export default function Home() {
                 </motion.div>
               </Link>
 
-              {/* 2. INSTANT WHITEBOARD BUTTON (NEW) */}
-              <Link href="/whiteboard">
+              {/* 2. INSTANT WHITEBOARD BUTTON */}
+              {/* Use a simple anchor or Link with target="_blank" for the separate app */}
+              <Link
+                href={
+                  process.env.NEXT_PUBLIC_INSTANT_BOARD_URL ||
+                  "http://localhost:3001"
+                }
+                target="_blank"
+              >
                 <motion.div
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
